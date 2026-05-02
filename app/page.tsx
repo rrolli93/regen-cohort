@@ -510,18 +510,53 @@ function Measure() {
 
 // ─── SUPPLY CHAIN ────────────────────────────────────────────────────────────
 function SupplyChain() {
-  // RM Monogram SVG
-  const RMMonogram = () => (
-    <svg viewBox="0 0 64 64" width="64" height="64" style={{ display: 'block' }}>
-      <circle cx="32" cy="32" r="30" fill="none" stroke="var(--accent)" strokeWidth="0.8" />
-      <text
-        x="32" y="38"
-        textAnchor="middle"
-        fontFamily="DM Serif Display, serif"
-        fontSize="18"
-        fill="var(--text)"
-        letterSpacing="1"
-      >RM</text>
+  // Roumai Logo SVG — figure-eight ribbon + ROUMAI wordmark
+  const RoumaiLogo = () => (
+    <svg viewBox="0 0 220 72" width="220" height="72" style={{ display: 'block' }} aria-label="Roumai Medical">
+      {/* ── Figure-eight ribbon symbol ── */}
+      {/* Bottom loop (large) — back layer */}
+      <path
+        d="M 10 52 C 2 52 2 28 14 28 C 20 28 26 34 32 40 C 38 46 44 52 50 52 C 62 52 62 28 54 28 C 48 28 42 34 36 40"
+        fill="none" stroke="#C1272D" strokeWidth="6" strokeLinecap="round"
+        style={{ opacity: 0.55 }}
+      />
+      {/* Top loop (small) — back layer */}
+      <path
+        d="M 36 40 C 30 34 24 28 18 28 C 6 28 6 8 18 8 C 24 8 30 14 36 20 C 42 26 48 32 54 28"
+        fill="none" stroke="#C1272D" strokeWidth="6" strokeLinecap="round"
+        style={{ opacity: 0.55 }}
+      />
+      {/* Bottom loop — front dominant stroke */}
+      <path
+        d="M 10 52 C 2 52 2 28 14 28 C 20 28 26 34 32 40"
+        fill="none" stroke="#C1272D" strokeWidth="6.5" strokeLinecap="round"
+      />
+      {/* Top loop — front dominant stroke */}
+      <path
+        d="M 36 20 C 42 26 48 32 54 28 C 66 20 62 8 54 8 C 48 8 42 14 36 20 C 30 26 24 32 18 38 C 12 44 6 50 10 52 C 16 56 26 52 32 48"
+        fill="none" stroke="#C1272D" strokeWidth="6.5" strokeLinecap="round"
+      />
+      {/* White overlap mask — ribbon fold at crossing point */}
+      <path
+        d="M 30 38 L 34 42"
+        fill="none" stroke="var(--bg-2)" strokeWidth="9" strokeLinecap="round"
+      />
+      {/* Redraw crossing strands over the mask */}
+      <path
+        d="M 27 35 C 29 37 31 39 33 41"
+        fill="none" stroke="#C1272D" strokeWidth="5.5" strokeLinecap="round"
+      />
+
+      {/* ── ROUMAI wordmark ── */}
+      {/* R */}
+      <text x="78" y="50" fontFamily="'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif"
+        fontSize="32" fontWeight="500" fill="#e8e4df" letterSpacing="1">R</text>
+      {/* O — two concentric red circles */}
+      <circle cx="112" cy="36" r="14.5" fill="none" stroke="#C1272D" strokeWidth="3.2" />
+      <circle cx="112" cy="36" r="5.5" fill="#C1272D" />
+      {/* UMAI */}
+      <text x="129" y="50" fontFamily="'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif"
+        fontSize="32" fontWeight="500" fill="#e8e4df" letterSpacing="1">UMAI</text>
     </svg>
   )
 
@@ -552,13 +587,10 @@ function SupplyChain() {
               borderRadius: 2,
               animation: 'borderShimmer 3s ease-in-out infinite',
             }}>
-              {/* RM Monogram */}
-              <RMMonogram />
+              {/* Roumai Logo */}
+              <RoumaiLogo />
 
-              <div style={{ fontFamily: 'DM Serif Display, serif', fontSize: 22, color: 'var(--text)', letterSpacing: '0.05em' }}>
-                Roumai Medical
-              </div>
-              <div style={{ fontSize: 11, letterSpacing: '0.15em', color: 'var(--text-3)', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: 11, letterSpacing: '0.15em', color: 'var(--text-3)', textTransform: 'uppercase', marginTop: 4 }}>
                 Licensed MSC Lysate Supplier
               </div>
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center', marginTop: 8 }}>
