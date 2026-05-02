@@ -9,11 +9,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        accent: '#0d9488',
       },
     },
   },
   plugins: [],
 };
+
 export default config;
