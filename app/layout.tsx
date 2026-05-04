@@ -7,7 +7,7 @@ const dmSerif = DM_Serif_Display({ subsets: ['latin'], weight: '400', style: ['n
 
 export const metadata: Metadata = {
   title: 'REGEN COHORT 01 — Private Longevity Program',
-  description: 'An 8-person observational wellness program tracking MSC lysate protocols and longitudinal biomarker data. By invitation only.',
+  description: 'An 8-person private longevity program tracking MSC lysate protocols and longitudinal biomarker data. By application only.',
   openGraph: {
     title: 'REGEN COHORT 01',
     description: 'Private longitudinal wellness program. 8 participants. Biomarker-tracked.',

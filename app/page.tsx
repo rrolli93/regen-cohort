@@ -95,7 +95,7 @@ function Hero() {
         </div>
 
         <p style={{ fontSize: 17, color: 'var(--text-2)', maxWidth: 560, marginBottom: 48, lineHeight: 1.7 }}>
-          An 8-person observational wellness program combining MSC-derived lysate infusions with
+          An 8-person private longevity program combining MSC-derived lysate infusions with
           systematic biomarker tracking over 6 months. Standardized. Data-first. By application only.
         </p>
 
@@ -128,10 +128,10 @@ function Hero() {
         <div style={{ marginTop: 80, borderTop: '1px solid var(--border)', paddingTop: 40 }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0 }}>
             {[
-              { num: '8', label: 'Participants' },
+              { num: '8–16', label: 'Participants' },
               { num: '6', label: 'Month program' },
-              { num: '40+', label: 'Biomarkers tracked' },
-              { num: '3', label: 'Treatment cycles' },
+              { num: '30+', label: 'Biomarkers tracked' },
+              { num: '2–3', label: 'Clinic visits' },
             ].map((s, i, arr) => (
               <div key={s.label} style={{
                 paddingRight: 32, paddingLeft: i === 0 ? 0 : 32,
@@ -165,9 +165,9 @@ function Protocol() {
     },
     {
       num: '02',
-      title: 'Regenerative Cofactors',
-      desc: 'Adjunct supplementation stack selected to support systemic recovery and biomarker response. Personalized to individual baseline labs. No pharmaceutical claims.',
-      tags: ['NAD+ precursors', 'Anti-inflammatory', 'Mitochondrial support'],
+      title: 'Structured Visit Protocol',
+      desc: 'International participants attend 2–3 concentrated clinic visits in Shenzhen across 6 months. Each visit delivers burst lysate dosing under physician supervision, with remote biomarker tracking between visits.',
+      tags: ['2–3 clinic visits', 'Physician-supervised', 'Remote follow-up'],
     },
     {
       num: '03',
@@ -250,11 +250,11 @@ function Protocol() {
 function Structure() {
   const phases = [
     { label: 'Week 0', title: 'Intake & Screening', desc: 'Application review, medical history, eligibility confirmation.' },
-    { label: 'Week 1', title: 'Baseline Assessment', desc: 'Full biomarker panel, epigenetic clock, body composition, wearable setup.' },
-    { label: 'Weeks 2–12', title: 'Treatment Cycles', desc: '3 infusion cycles, bi-weekly check-ins, passive data collection.' },
-    { label: 'Week 14', title: 'Follow-up Labs', desc: 'Mid-program biomarker snapshot, protocol adjustment if indicated.' },
-    { label: 'Week 24', title: 'Final Assessment', desc: 'Complete biomarker stack repeat, epigenetic re-scoring, data review.' },
-    { label: 'Ongoing', title: 'Data Review', desc: 'Longitudinal dataset compiled, individual reports delivered.' },
+    { label: 'Week 1', title: 'Baseline Assessment', desc: 'Full biomarker panel, epigenetic clock, wearable setup.' },
+    { label: 'Week 3', title: 'MSC IV Anchor — Shenzhen', desc: 'MSC IV anchor at Roumai clinic, Shenzhen. Days 4–6: concentrated lysate dosing under physician supervision.' },
+    { label: 'Month 3', title: 'Mid-Program Return Visit (Option A)', desc: 'Return visit — mid-program bloods, epigenetic retest, lysate booster doses.' },
+    { label: 'Week 24', title: 'Final Assessment', desc: 'Return visit — full biomarker panel, epigenetic re-scoring, final lysate doses, exit consultation.' },
+    { label: 'Within 4 weeks', title: 'Individual Report', desc: 'Individual before/after report delivered within 4 weeks of final visit.' },
   ]
 
   // SVG Icons for callout cards
@@ -379,11 +379,11 @@ function Measure() {
   const categories = [
     {
       cat: 'Epigenetic Age',
-      items: ['DunedinPACE', 'GrimAge v2', 'PhenoAge', 'TruAge score'],
+      items: ['DunedinPACE', 'GrimAge v2'],
     },
     {
       cat: 'Inflammatory Panel',
-      items: ['hs-CRP', 'IL-6', 'TNF-α', 'Ferritin', 'ESR'],
+      items: ['hs-CRP', 'IL-6', 'TNF-α', 'GDF-15'],
     },
     {
       cat: 'Metabolic Markers',
@@ -392,10 +392,6 @@ function Measure() {
     {
       cat: 'Hormonal Status',
       items: ['Total/Free testosterone', 'IGF-1', 'DHEA-S', 'Cortisol AM', 'TSH'],
-    },
-    {
-      cat: 'Body Composition',
-      items: ['DEXA or BIA', 'Visceral fat index', 'Lean mass %', 'Bone density'],
     },
     {
       cat: 'Sleep & HRV',
@@ -431,27 +427,17 @@ function Measure() {
               <span style={{ fontSize: 11, letterSpacing: '0.15em', color: 'var(--text-3)', textTransform: 'uppercase' }}>Epigenetic Age Index</span>
               <span style={{ fontSize: 11, letterSpacing: '0.1em', color: 'var(--text-3)', textTransform: 'uppercase' }}>Tracked monthly</span>
             </div>
-            {/* Bar track */}
+            {/* Bar track — illustrative only, no data values displayed */}
             <div style={{ position: 'relative', height: 6, backgroundColor: 'var(--bg-3)', borderRadius: 3, overflow: 'visible' }}>
-              {/* Filled portion at 62% */}
               <div style={{
                 position: 'absolute', left: 0, top: 0, bottom: 0,
-                width: '62%', backgroundColor: 'var(--accent)',
-                borderRadius: 3,
-              }} />
-              {/* Dot at 62% */}
-              <div style={{
-                position: 'absolute', top: '50%', left: '62%',
-                transform: 'translate(-50%, -50%)',
-                width: 12, height: 12, borderRadius: '50%',
-                backgroundColor: 'var(--accent)',
-                boxShadow: '0 0 8px var(--accent-glow)',
-                border: '2px solid var(--bg-2)',
+                width: '55%', backgroundColor: 'var(--accent)',
+                borderRadius: 3, opacity: 0.4,
               }} />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 10 }}>
               <span style={{ fontSize: 11, color: 'var(--text-3)' }}>Biological Age Score</span>
-              <span style={{ fontSize: 11, color: 'var(--accent)', fontFamily: 'DM Serif Display, serif' }}>62%</span>
+              <span style={{ fontSize: 11, color: 'var(--text-3)', fontStyle: 'italic' }}>Example</span>
             </div>
           </div>
         </div>
@@ -551,7 +537,10 @@ function SupplyChain() {
               {/* Roumai Logo */}
               <RoumaiLogo />
 
-              <div style={{ fontSize: 11, letterSpacing: '0.15em', color: 'var(--text-3)', textTransform: 'uppercase', marginTop: 4 }}>
+              <div style={{ fontSize: 13, fontFamily: 'DM Serif Display, serif', color: 'var(--text-2)', letterSpacing: '0.1em', marginTop: 4 }}>
+                ROUMAI Medical
+              </div>
+              <div style={{ fontSize: 11, letterSpacing: '0.15em', color: 'var(--text-3)', textTransform: 'uppercase', marginTop: 2 }}>
                 Licensed MSC Lysate Supplier
               </div>
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center', marginTop: 8 }}>
@@ -591,7 +580,7 @@ function WhoFor() {
     'Willing to travel internationally for treatment (Cohort 01 in Shenzhen, China)',
     'Biohackers interested in systematic, data-tracked regenerative protocols',
     'Those willing to commit to all 3 treatment cycles and follow-up assessments',
-    'Individuals aged 30–65 with no active autoimmune conditions',
+    'Individuals aged 30–60 with no active autoimmune conditions',
   ]
 
   const locations = [
@@ -652,7 +641,7 @@ function WhoFor() {
               borderRadius: 2,
             }}>
               <div style={{ fontSize: 12, color: 'var(--text-2)', lineHeight: 1.65 }}>
-                Cohort 01 takes place in Shenzhen. Subsequent cohorts expand across the global treatment roadmap above.
+                Cohort 01 takes place at Roumai Medical&apos;s partner clinic in Shenzhen, where GMP manufacturing and clinical infrastructure are co-located. Subsequent cohorts expand across the global treatment roadmap above.
               </div>
             </div>
           </div>
@@ -775,6 +764,13 @@ function Apply() {
                   {item}
                 </div>
               ))}
+            </div>
+
+            {/* Price anchoring */}
+            <div style={{ marginTop: 32, padding: '16px 20px', border: '1px solid var(--border-2)', borderLeft: '2px solid var(--accent)', borderRadius: 2 }}>
+              <p style={{ fontSize: 13, color: 'var(--text-2)', lineHeight: 1.7, margin: 0 }}>
+                Program investment is disclosed during the private briefing call. Please apply only if you are comfortable with premium longevity programs in the $80,000–95,000 range.
+              </p>
             </div>
 
             {/* What happens next */}
@@ -975,7 +971,7 @@ function Footer() {
               REGEN COHORT
             </div>
             <p style={{ fontSize: 13, color: 'var(--text-3)', lineHeight: 1.65, maxWidth: 360 }}>
-              A private observational wellness program. Not a medical service. Not a clinical trial.
+              A private longevity program. Not a medical service. Not a clinical trial.
               Participants engage voluntarily and are encouraged to consult qualified medical professionals.
             </p>
           </div>
@@ -987,7 +983,7 @@ function Footer() {
 
         <div style={{ borderTop: '1px solid var(--border)', paddingTop: 24 }}>
           <p style={{ fontSize: 12, color: 'var(--text-3)', lineHeight: 1.65, marginBottom: 16, maxWidth: 800 }}>
-            <strong style={{ color: 'var(--text-2)' }}>Wellness Disclaimer:</strong> REGEN COHORT is an observational wellness program, not a licensed medical service or clinical trial. No therapeutic claims are made. Participants should consult qualified healthcare professionals before enrolling. Information on this page is for educational purposes only.
+            <strong style={{ color: 'var(--text-2)' }}>Disclaimer:</strong> REGEN COHORT is a private longevity program, not a licensed medical service or clinical trial. No therapeutic claims are made. Participants should consult qualified healthcare professionals before enrolling. Information on this page is for educational purposes only.
           </p>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
             <span style={{ fontSize: 12, color: 'var(--text-3)' }}>© 2026 REGEN COHORT. All rights reserved.</span>
