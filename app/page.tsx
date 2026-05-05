@@ -363,7 +363,7 @@ function PlayButton() {
         color: hovered ? T.accent : T.muted,
         transition: 'color 0.3s',
       }}>
-        Play Teaser — 45s
+        Play Teaser — 40s
       </span>
     </div>
   )
