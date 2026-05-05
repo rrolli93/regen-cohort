@@ -20,6 +20,10 @@ function useScrollReveal() {
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    // Only animate if element is not yet in view on load
+    const rect = el.getBoundingClientRect()
+    const inView = rect.top < window.innerHeight
+    if (inView) return // skip animation for above-fold elements
     el.style.opacity = '0'
     el.style.transform = 'translateY(20px)'
     el.style.transition = 'opacity 0.7s ease, transform 0.7s ease'
@@ -58,6 +62,18 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
     }}>
       {children}
     </div>
+  )
+}
+
+// ─── GOLD RULE — thin 1px × 40px gold line above section headlines ───────────
+function GoldRule() {
+  return (
+    <div style={{
+      width: 40,
+      height: 1,
+      backgroundColor: T.accent,
+      marginBottom: 20,
+    }} />
   )
 }
 
@@ -221,9 +237,9 @@ function Hero() {
           marginBottom: 40,
           maxWidth: 820,
         }}>
-          Regenerative protocols.<br />
+          <span style={{ color: '#F5F0E8' }}>Regenerative protocols.</span><br />
           <span style={{ color: T.accent }}>Longitudinal data.</span><br />
-          Private cohort.
+          <span style={{ color: '#F5F0E8' }}>Private cohort.</span>
         </h1>
 
         <p style={{
@@ -322,6 +338,7 @@ function Protocol() {
       <div style={{ maxWidth: T.maxW, margin: '0 auto', padding: '0 24px' }}>
         <Reveal style={{ marginBottom: 72 }}>
           <Eyebrow>The Protocol</Eyebrow>
+          <GoldRule />
           <h2 style={{
             fontFamily: 'var(--font-cormorant), serif',
             fontSize: 'clamp(36px, 5vw, 56px)',
@@ -340,9 +357,7 @@ function Protocol() {
           backgroundColor: T.border,
         }}>
           {cards.map(card => (
-            <Reveal key={card.num}>
-              <CardProtocol card={card} />
-            </Reveal>
+            <CardProtocol key={card.num} card={card} />
           ))}
         </div>
       </div>
@@ -443,6 +458,7 @@ function Structure() {
       <div style={{ maxWidth: T.maxW, margin: '0 auto', padding: '0 24px' }}>
         <Reveal style={{ marginBottom: 80 }}>
           <Eyebrow>Cohort Structure</Eyebrow>
+          <GoldRule />
           <h2 style={{
             fontFamily: 'var(--font-cormorant), serif',
             fontSize: 'clamp(36px, 5vw, 56px)',
@@ -503,9 +519,7 @@ function Structure() {
         {/* Callouts */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 1, backgroundColor: T.border }}>
           {callouts.map((c, idx) => (
-            <Reveal key={c.title}>
-              <CalloutCard c={c} idx={idx} />
-            </Reveal>
+            <CalloutCard key={c.title} c={c} idx={idx} />
           ))}
         </div>
       </div>
@@ -576,6 +590,7 @@ function Measure() {
       <div style={{ maxWidth: T.maxW, margin: '0 auto', padding: '0 24px' }}>
         <Reveal style={{ marginBottom: 72 }}>
           <Eyebrow>What We Measure</Eyebrow>
+          <GoldRule />
           <h2 style={{
             fontFamily: 'var(--font-cormorant), serif',
             fontSize: 'clamp(36px, 5vw, 56px)',
@@ -587,19 +602,17 @@ function Measure() {
           </h2>
         </Reveal>
 
-        <Reveal>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-            gap: 1,
-            backgroundColor: T.border,
-            marginBottom: 80,
-          }}>
-            {categories.map(cat => (
-              <CatCard key={cat.cat} cat={cat} />
-            ))}
-          </div>
-        </Reveal>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+          gap: 1,
+          backgroundColor: T.border,
+          marginBottom: 80,
+        }}>
+          {categories.map(cat => (
+            <CatCard key={cat.cat} cat={cat} />
+          ))}
+        </div>
 
         {/* Pull quote */}
         <Reveal>
@@ -681,6 +694,7 @@ function SupplyChain() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
           <Reveal>
             <Eyebrow>Supply Chain</Eyebrow>
+            <GoldRule />
             <h2 style={{
               fontFamily: 'var(--font-cormorant), serif',
               fontSize: 'clamp(32px, 4vw, 48px)',
@@ -783,6 +797,7 @@ function WhoFor() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80 }}>
           <Reveal>
             <Eyebrow>Who This Is For</Eyebrow>
+            <GoldRule />
             <h2 style={{
               fontFamily: 'var(--font-cormorant), serif',
               fontSize: 'clamp(32px, 4vw, 48px)',
@@ -813,6 +828,7 @@ function WhoFor() {
           </Reveal>
           <Reveal>
             <Eyebrow>Treatment Locations</Eyebrow>
+            <GoldRule />
             <h2 style={{
               fontFamily: 'var(--font-cormorant), serif',
               fontSize: 'clamp(32px, 4vw, 48px)',
@@ -945,6 +961,7 @@ function Apply() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: 80, alignItems: 'start' }}>
           <Reveal>
             <Eyebrow>Application</Eyebrow>
+            <GoldRule />
             <h2 style={{
               fontFamily: 'var(--font-cormorant), serif',
               fontSize: 'clamp(36px, 5vw, 56px)',
