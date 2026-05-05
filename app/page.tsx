@@ -352,7 +352,7 @@ function Protocol() {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+          gridTemplateColumns: 'repeat(3, 1fr)',
           gap: 1,
           backgroundColor: T.border,
         }}>
@@ -605,9 +605,9 @@ function Measure() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-          gap: 1,
-          backgroundColor: T.border,
+          gap: 0,
           marginBottom: 80,
+          border: '1px solid ' + T.border,
         }}>
           {categories.map(cat => (
             <CatCard key={cat.cat} cat={cat} />
@@ -650,6 +650,8 @@ function CatCard({ cat }: { cat: { cat: string; items: string[] } }) {
         backgroundColor: hovered ? T.card : T.bg,
         padding: '28px 24px',
         transition: 'background-color 0.3s',
+        borderRight: '1px solid ' + T.border,
+        borderBottom: '1px solid ' + T.border,
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
