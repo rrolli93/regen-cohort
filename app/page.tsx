@@ -310,6 +310,122 @@ function Hero() {
   )
 }
 
+// ─── TEASER VIDEO ────────────────────────────────────────────────────────────
+function TeaserSection() {
+  const [playing, setPlaying] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  const handlePlay = () => {
+    setPlaying(true)
+    if (videoRef.current) {
+      videoRef.current.play()
+    }
+  }
+
+  const handleEnded = () => {
+    setPlaying(false)
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0
+      videoRef.current.load()
+    }
+  }
+
+  return (
+    <section style={{ borderBottom: '1px solid ' + T.border, padding: '0' }}>
+      <div
+        onClick={!playing ? handlePlay : undefined}
+        style={{
+          position: 'relative',
+          width: '100%',
+          aspectRatio: '16 / 9',
+          backgroundColor: T.bg,
+          cursor: playing ? 'default' : 'pointer',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Video element — poster shows until played */}
+        <video
+          ref={videoRef}
+          src="/teaser.mp4"
+          poster="/teaser-poster.jpg"
+          muted={false}
+          playsInline
+          onEnded={handleEnded}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+          }}
+        />
+
+        {/* Overlay — visible only when not playing */}
+        {!playing && (
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+            alignItems: 'flex-start',
+            padding: '40px 48px',
+            background: 'linear-gradient(to top, rgba(10,10,10,0.55) 0%, transparent 50%)',
+            pointerEvents: 'none',
+          }}>
+            {/* "PLAY TEASER" label */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 14,
+            }}>
+              {/* Thin gold square border "button" */}
+              <div style={{
+                width: 36,
+                height: 36,
+                border: '1px solid ' + T.accent,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+              }}>
+                {/* Triangle play mark in gold */}
+                <div style={{
+                  width: 0,
+                  height: 0,
+                  borderTop: '6px solid transparent',
+                  borderBottom: '6px solid transparent',
+                  borderLeft: '10px solid ' + T.accent,
+                  marginLeft: 2,
+                }} />
+              </div>
+              <span style={{
+                fontFamily: 'var(--font-inter), sans-serif',
+                fontSize: 11,
+                fontWeight: 400,
+                letterSpacing: '0.22em',
+                textTransform: 'uppercase',
+                color: T.accent,
+              }}>
+                Play Teaser
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Gold border frame — always visible */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          border: '1px solid ' + T.border,
+          pointerEvents: 'none',
+        }} />
+      </div>
+    </section>
+  )
+}
+
 // ─── PROTOCOL ────────────────────────────────────────────────────────────────
 function Protocol() {
   const cards = [
@@ -1213,6 +1329,7 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <TeaserSection />
         <Protocol />
         <Structure />
         <Measure />
