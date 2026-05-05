@@ -12,7 +12,64 @@ const T = {
   accent: '#C9A96E',
   border: '#2A2520',
   maxW: 900,
+  // Gold gradient — dark bronze → pale champagne → bronze (Assembly-style)
+  goldGrad: 'linear-gradient(135deg, #A07830 0%, #D4B47A 35%, #F5E4A8 55%, #D4B47A 75%, #A07830 100%)',
 } as const
+
+// Gradient gold text style — apply as inline style object
+const goldText: React.CSSProperties = {
+  background: T.goldGrad,
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+  backgroundClip: 'text',
+}
+
+// ─── CORNER BRACKET DECORATION ───────────────────────────────────────────────
+// Art Deco L-bracket + diamond corners — used on bordered boxes (Assembly style)
+
+// Reusable bordered box with corner decorations
+function DecoratedBox({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
+  const corner = (rot: number) => (
+    <div style={{
+      position: 'absolute',
+      width: 28, height: 28,
+      transform: `rotate(${rot}deg)`,
+      ...(rot === 0   ? { top: -1, left: -1 }   : {}),
+      ...(rot === 90  ? { top: -1, right: -1 }   : {}),
+      ...(rot === 180 ? { bottom: -1, right: -1 } : {}),
+      ...(rot === 270 ? { bottom: -1, left: -1 }  : {}),
+    }}>
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <defs>
+          <linearGradient id={`cg-${rot}`} x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#8B6B2E" />
+            <stop offset="50%" stopColor="#F3E1A0" />
+            <stop offset="100%" stopColor="#8B6B2E" />
+          </linearGradient>
+        </defs>
+        {/* L-shaped bracket lines */}
+        <line x1="0" y1="14" x2="0" y2="0" stroke={`url(#cg-${rot})`} strokeWidth="1"/>
+        <line x1="0" y1="0" x2="14" y2="0" stroke={`url(#cg-${rot})`} strokeWidth="1"/>
+        {/* Diamond at corner tip */}
+        <rect x="14" y="1" width="7" height="7" transform="rotate(45 14 5)"
+          fill="none" stroke={`url(#cg-${rot})`} strokeWidth="0.8"/>
+      </svg>
+    </div>
+  )
+  return (
+    <div style={{
+      position: 'relative',
+      border: '0.5px solid rgba(201,169,110,0.35)',
+      ...style,
+    }}>
+      {corner(0)}
+      {corner(90)}
+      {corner(180)}
+      {corner(270)}
+      {children}
+    </div>
+  )
+}
 
 // ─── SCROLL REVEAL HOOK ───────────────────────────────────────────────────────
 function useScrollReveal() {
@@ -65,13 +122,13 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   )
 }
 
-// ─── GOLD RULE — thin 1px × 40px gold line above section headlines ───────────
+// ─── GOLD RULE — thin 1px × 40px gradient gold line above section headlines ──
 function GoldRule() {
   return (
     <div style={{
       width: 40,
       height: 1,
-      backgroundColor: T.accent,
+      background: T.goldGrad,
       marginBottom: 20,
     }} />
   )
@@ -159,8 +216,8 @@ function Nav() {
           fontFamily: 'var(--font-cormorant), serif',
           fontSize: 13,
           letterSpacing: '0.22em',
-          color: T.text,
           fontWeight: 300,
+          ...goldText,
         }}>
           REGEN COHORT
         </span>
@@ -238,7 +295,7 @@ function Hero() {
           maxWidth: 820,
         }}>
           <span style={{ color: '#F5F0E8' }}>Regenerative protocols.</span><br />
-          <span style={{ color: T.accent }}>Longitudinal data.</span><br />
+          <span style={goldText}>Longitudinal data.</span><br />
           <span style={{ color: '#F5F0E8' }}>Private cohort.</span>
         </h1>
 
@@ -307,6 +364,51 @@ function Hero() {
         </div>
       </div>
     </section>
+  )
+}
+
+// ─── SCROLLING MARQUEE ───────────────────────────────────────────────────────
+function Marquee() {
+  const items = ['REGEN COHORT', '◆', 'COHORT 01', '◆', 'SHENZHEN 2026', '◆', 'BY APPLICATION ONLY', '◆', 'MSC LYSATE', '◆', 'LONGITUDINAL DATA', '◆']
+  // Double the content so the loop is seamless
+  return (
+    <div style={{
+      borderTop: '0.5px solid ' + T.border,
+      borderBottom: '0.5px solid ' + T.border,
+      overflow: 'hidden',
+      padding: '13px 0',
+      backgroundColor: T.bg,
+    }}>
+      <div style={{
+        display: 'flex',
+        width: 'max-content',
+        animation: 'marqueeScroll 28s linear infinite',
+      }}>
+        {[0, 1].map(i => (
+          <div key={i} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 32,
+            paddingRight: 32,
+            whiteSpace: 'nowrap',
+          }}>
+            {items.map((item, idx) => (
+              <span key={idx} style={{
+                fontFamily: 'var(--font-inter), sans-serif',
+                fontSize: 10,
+                fontWeight: 400,
+                letterSpacing: '0.22em',
+                color: item === '◆' ? T.accent : T.muted,
+                textTransform: 'uppercase',
+                opacity: item === '◆' ? 0.7 : 0.45,
+              }}>
+                {item}
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }
 
@@ -815,6 +917,55 @@ function CatCard({ cat }: { cat: { cat: string; items: string[] } }) {
   )
 }
 
+// ─── PULL QUOTE SECTION ───────────────────────────────────────────────────────
+function PullQuote() {
+  return (
+    <section style={{ borderBottom: '1px solid ' + T.border, padding: '120px 0', backgroundColor: T.bg }}>
+      <div style={{ maxWidth: T.maxW, margin: '0 auto', padding: '0 24px' }}>
+        <Reveal>
+          <DecoratedBox style={{ padding: '64px 72px', textAlign: 'center' }}>
+            {/* Diamond separator top */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 48 }}>
+              <div style={{ height: '0.5px', width: 60, background: T.goldGrad }} />
+              <span style={{ fontSize: 10, ...goldText }}>◆</span>
+              <div style={{ height: '0.5px', width: 60, background: T.goldGrad }} />
+            </div>
+
+            <p style={{
+              fontFamily: 'var(--font-cormorant), serif',
+              fontSize: 'clamp(28px, 3.5vw, 44px)',
+              fontWeight: 300,
+              lineHeight: 1.3,
+              fontStyle: 'italic',
+              color: T.text,
+              maxWidth: 640,
+              margin: '0 auto 32px',
+            }}>
+              &ldquo;You are not a patient.
+              You are a data point in the most important longevity dataset being built.&rdquo;
+            </p>
+
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 0 }}>
+              <div style={{ height: '0.5px', width: 40, background: T.goldGrad }} />
+              <span style={{
+                fontFamily: 'var(--font-inter), sans-serif',
+                fontSize: 10,
+                fontWeight: 400,
+                letterSpacing: '0.22em',
+                textTransform: 'uppercase',
+                color: T.muted,
+              }}>
+                REGEN COHORT 01 — Program Principle
+              </span>
+              <div style={{ height: '0.5px', width: 40, background: T.goldGrad }} />
+            </div>
+          </DecoratedBox>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
 // ─── SUPPLY CHAIN ────────────────────────────────────────────────────────────
 function SupplyChain() {
   return (
@@ -845,8 +996,7 @@ function SupplyChain() {
             </p>
           </Reveal>
           <Reveal>
-            <div style={{
-              border: '1px solid ' + T.border,
+            <DecoratedBox style={{
               padding: '52px',
               display: 'flex',
               flexDirection: 'column',
@@ -893,7 +1043,7 @@ function SupplyChain() {
                   </span>
                 ))}
               </div>
-            </div>
+            </DecoratedBox>
           </Reveal>
         </div>
       </div>
@@ -1161,17 +1311,13 @@ function Apply() {
 
           <Reveal>
             {status === 'success' ? (
-              <div style={{
-                border: '1px solid ' + T.accent,
-                padding: '52px 40px',
-                textAlign: 'center',
-              }}>
+              <DecoratedBox style={{ padding: '52px 40px', textAlign: 'center' }}>
                 <div style={{
                   fontFamily: 'var(--font-cormorant), serif',
                   fontSize: 32,
                   fontWeight: 300,
-                  color: T.accent,
                   marginBottom: 20,
+                  ...goldText,
                 }}>
                   Application received.
                 </div>
@@ -1179,8 +1325,9 @@ function Apply() {
                   We will review your submission and respond within 72 hours.
                   Check your email for confirmation.
                 </p>
-              </div>
+              </DecoratedBox>
             ) : (
+              <DecoratedBox style={{ padding: '40px 40px 48px' }}>
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
                 <div>
                   <label style={labelStyle}>Full Name</label>
@@ -1273,6 +1420,7 @@ function Apply() {
                   {status === 'submitting' ? 'Submitting...' : 'Submit Application'}
                 </CTAButton>
               </form>
+              </DecoratedBox>
             )}
           </Reveal>
         </div>
@@ -1340,10 +1488,12 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
+        <Marquee />
         <TeaserSection />
         <Protocol />
         <Structure />
         <Measure />
+        <PullQuote />
         <SupplyChain />
         <WhoFor />
         <Apply />
