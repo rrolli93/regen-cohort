@@ -3,17 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0a0a0a;
-  --bg-2: #111111;
-  --bg-3: #161616;
-  --border: #1e1e1e;
-  --border-2: #2a2a2a;
-  --text: #e8e4df;
-  --text-2: #9a9490;
-  --text-3: #5a5652;
-  --accent: #c9813a;
-  --accent-dim: #a8682e;
-  --accent-glow: rgba(201, 129, 58, 0.12);
+  --bg: #0A0A0A;
+  --card: #111111;
+  --text: #F5F0E8;
+  --muted: #8A8580;
+  --accent: #C9A96E;
+  --border: #2A2520;
 }
 
 html {
@@ -23,16 +18,11 @@ html {
 body {
   background-color: var(--bg);
   color: var(--text);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-inter), sans-serif;
   font-size: 15px;
-  line-height: 1.6;
+  line-height: 1.8;
+  font-weight: 300;
   -webkit-font-smoothing: antialiased;
-}
-
-h1, h2, h3 {
-  font-family: 'DM Serif Display', serif;
-  font-weight: 400;
-  line-height: 1.15;
 }
 
 ::selection {
@@ -41,27 +31,16 @@ h1, h2, h3 {
 }
 
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 3px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-2);
-  border-radius: 2px;
+  background: var(--border);
 }
 
-@keyframes heroGlow {
-  from { opacity: 0.08; transform: scale(1); }
-  to { opacity: 0.18; transform: scale(1.15); }
-}
-
-@keyframes borderShimmer {
-  0%, 100% { border-color: var(--border-2); }
-  50% { border-color: rgba(201, 129, 58, 0.4); }
-}
-
-@keyframes btnShimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
+@keyframes heroFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
