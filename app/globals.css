@@ -8,6 +8,9 @@
   --text: #F5F0E8;
   --muted: #8A8580;
   --accent: #C9A96E;
+  /* Gold gradient — dark bronze → pale champagne, Assembly-style */
+  --gold-gradient: linear-gradient(135deg, #8B6B2E 0%, #C9A96E 40%, #F3E1A0 65%, #C9A96E 80%, #8B6B2E 100%);
+  --gold-gradient-text: linear-gradient(135deg, #A07830 0%, #D4B47A 35%, #F5E4A8 55%, #D4B47A 75%, #A07830 100%);
   --border: #2A2520;
 }
 
@@ -23,6 +26,29 @@ body {
   line-height: 1.8;
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
+  /* Film grain overlay via SVG noise filter */
+  position: relative;
+}
+
+/* Grain texture overlay — sits on top of everything, non-interactive */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  background-repeat: repeat;
+}
+
+/* Gradient gold text utility */
+.text-gold-gradient {
+  background: var(--gold-gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 ::selection {
@@ -43,4 +69,10 @@ body {
 @keyframes heroFadeIn {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Marquee animation */
+@keyframes marqueeScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
