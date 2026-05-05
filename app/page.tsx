@@ -310,6 +310,65 @@ function Hero() {
   )
 }
 
+// ─── PLAY BUTTON ─────────────────────────────────────────────────────────────
+function PlayButton() {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <div style={{
+      position: 'absolute',
+      inset: 0,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 20,
+      background: 'rgba(10,10,10,0.45)',
+      pointerEvents: 'none',
+    }}>
+      {/* Circle play button */}
+      <div
+        style={{
+          width: 80,
+          height: 80,
+          border: `1px solid ${hovered ? T.accent : 'rgba(201,169,110,0.5)'}`,
+          borderRadius: '50%',
+          backgroundColor: hovered ? 'rgba(201,169,110,0.12)' : 'rgba(10,10,10,0.6)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'border-color 0.3s, background-color 0.3s',
+          pointerEvents: 'auto',
+          cursor: 'pointer',
+        }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        {/* Triangle */}
+        <div style={{
+          width: 0,
+          height: 0,
+          borderTop: '12px solid transparent',
+          borderBottom: '12px solid transparent',
+          borderLeft: `20px solid ${T.accent}`,
+          marginLeft: 5,
+        }} />
+      </div>
+      {/* Label */}
+      <span style={{
+        fontFamily: 'var(--font-inter), sans-serif',
+        fontSize: 11,
+        fontWeight: 400,
+        letterSpacing: '0.22em',
+        textTransform: 'uppercase',
+        color: hovered ? T.accent : T.muted,
+        transition: 'color 0.3s',
+      }}>
+        Play Teaser — 45s
+      </span>
+    </div>
+  )
+}
+
 // ─── TEASER VIDEO ────────────────────────────────────────────────────────────
 function TeaserSection() {
   const [playing, setPlaying] = useState(false)
@@ -363,55 +422,7 @@ function TeaserSection() {
 
         {/* Overlay — visible only when not playing */}
         {!playing && (
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-end',
-            alignItems: 'flex-start',
-            padding: '40px 48px',
-            background: 'linear-gradient(to top, rgba(10,10,10,0.55) 0%, transparent 50%)',
-            pointerEvents: 'none',
-          }}>
-            {/* "PLAY TEASER" label */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 14,
-            }}>
-              {/* Thin gold square border "button" */}
-              <div style={{
-                width: 36,
-                height: 36,
-                border: '1px solid ' + T.accent,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-              }}>
-                {/* Triangle play mark in gold */}
-                <div style={{
-                  width: 0,
-                  height: 0,
-                  borderTop: '6px solid transparent',
-                  borderBottom: '6px solid transparent',
-                  borderLeft: '10px solid ' + T.accent,
-                  marginLeft: 2,
-                }} />
-              </div>
-              <span style={{
-                fontFamily: 'var(--font-inter), sans-serif',
-                fontSize: 11,
-                fontWeight: 400,
-                letterSpacing: '0.22em',
-                textTransform: 'uppercase',
-                color: T.accent,
-              }}>
-                Play Teaser
-              </span>
-            </div>
-          </div>
+          <PlayButton />
         )}
 
         {/* Gold border frame — always visible */}
