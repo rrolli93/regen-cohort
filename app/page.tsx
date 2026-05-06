@@ -465,7 +465,7 @@ function PlayButton() {
         color: hovered ? T.accent : T.muted,
         transition: 'color 0.3s',
       }}>
-        Play Teaser — 1:05
+        Play Teaser — 0:48
       </span>
     </div>
   )
@@ -524,7 +524,7 @@ function TeaserSection() {
         {/* Video element */}
         <video
           ref={videoRef}
-          src="https://github.com/rrolli93/regen-cohort/releases/download/teaser-v4/regen-cohort-teaser-v4.mp4"
+          src="https://github.com/rrolli93/regen-cohort/releases/download/teaser-v5/regen-cohort-teaser-v5.mp4"
           poster="/teaser-poster.jpg"
           muted={false}
           playsInline
