@@ -524,7 +524,7 @@ function TeaserSection() {
         {/* Video element */}
         <video
           ref={videoRef}
-          src="/teaser.mp4"
+          src="/teaser-v4.mp4"
           poster="/teaser-poster.jpg"
           muted={false}
           playsInline
