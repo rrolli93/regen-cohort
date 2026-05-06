@@ -465,7 +465,7 @@ function PlayButton() {
         color: hovered ? T.accent : T.muted,
         transition: 'color 0.3s',
       }}>
-        Play Teaser — 40s
+        Play Teaser — 1:05
       </span>
     </div>
   )
@@ -474,17 +474,32 @@ function PlayButton() {
 // ─── TEASER VIDEO ────────────────────────────────────────────────────────────
 function TeaserSection() {
   const [playing, setPlaying] = useState(false)
+  const [paused, setPaused] = useState(false)
+  const [hovering, setHovering] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
 
   const handlePlay = () => {
     setPlaying(true)
+    setPaused(false)
     if (videoRef.current) {
       videoRef.current.play()
     }
   }
 
+  const handleTogglePause = () => {
+    if (!videoRef.current) return
+    if (paused) {
+      videoRef.current.play()
+      setPaused(false)
+    } else {
+      videoRef.current.pause()
+      setPaused(true)
+    }
+  }
+
   const handleEnded = () => {
     setPlaying(false)
+    setPaused(false)
     if (videoRef.current) {
       videoRef.current.currentTime = 0
       videoRef.current.load()
@@ -494,17 +509,19 @@ function TeaserSection() {
   return (
     <section style={{ borderBottom: '1px solid ' + T.border, padding: '0' }}>
       <div
-        onClick={!playing ? handlePlay : undefined}
+        onClick={!playing ? handlePlay : handleTogglePause}
+        onMouseEnter={() => setHovering(true)}
+        onMouseLeave={() => setHovering(false)}
         style={{
           position: 'relative',
           width: '100%',
           aspectRatio: '16 / 9',
           backgroundColor: T.bg,
-          cursor: playing ? 'default' : 'pointer',
+          cursor: 'pointer',
           overflow: 'hidden',
         }}
       >
-        {/* Video element — poster shows until played */}
+        {/* Video element */}
         <video
           ref={videoRef}
           src="/teaser.mp4"
@@ -522,12 +539,65 @@ function TeaserSection() {
           }}
         />
 
-        {/* Overlay — visible only when not playing */}
+        {/* Pre-play overlay */}
         {!playing && (
           <PlayButton />
         )}
 
-        {/* Gold border frame — always visible */}
+        {/* Pause indicator — shown on hover while playing and not paused */}
+        {playing && !paused && hovering && (
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'rgba(10,10,10,0.35)',
+            transition: 'opacity 0.2s',
+          }}>
+            <div style={{
+              display: 'flex',
+              gap: 6,
+              alignItems: 'center',
+            }}>
+              <div style={{ width: 4, height: 28, background: T.accent, borderRadius: 2 }} />
+              <div style={{ width: 4, height: 28, background: T.accent, borderRadius: 2 }} />
+            </div>
+          </div>
+        )}
+
+        {/* Resume indicator — shown on hover while paused */}
+        {playing && paused && (
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'rgba(10,10,10,0.55)',
+          }}>
+            {/* Play triangle */}
+            <div style={{
+              width: 0,
+              height: 0,
+              borderStyle: 'solid',
+              borderWidth: '18px 0 18px 32px',
+              borderColor: `transparent transparent transparent ${T.accent}`,
+              marginBottom: 16,
+            }} />
+            <span style={{
+              fontFamily: 'var(--font-inter), sans-serif',
+              fontSize: 11,
+              fontWeight: 400,
+              letterSpacing: '0.22em',
+              textTransform: 'uppercase',
+              color: T.muted,
+            }}>Click to resume</span>
+          </div>
+        )}
+
+        {/* Gold border frame */}
         <div style={{
           position: 'absolute',
           inset: 0,
