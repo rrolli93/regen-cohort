@@ -524,7 +524,7 @@ function TeaserSection() {
         {/* Video element */}
         <video
           ref={videoRef}
-          src="/teaser-v4.mp4"
+          src="https://github.com/rrolli93/regen-cohort/releases/download/teaser-v4/regen-cohort-teaser-v4.mp4"
           poster="/teaser-poster.jpg"
           muted={false}
           playsInline
